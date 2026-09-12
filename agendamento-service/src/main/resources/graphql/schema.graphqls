@@ -1,0 +1,25 @@
+# src/main/resources/graphql/schema.graphqls
+
+type Query {
+    historicoConsultas(apenasFuturas: Boolean): [Consulta]
+}
+
+type Consulta {
+    id: ID!
+    data: String!
+    status: String!
+    motivoCancelamento: String
+    medico: MedicoHistorico
+    paciente: PacienteHistorico
+}
+
+type MedicoHistorico {
+    id: ID!
+    nome: String!
+    crm: String!
+}
+
+type PacienteHistorico {
+    id: ID!
+    nome: String!
+}

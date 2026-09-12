@@ -1,0 +1,20 @@
+# Compilação e Binários Java (atende ao feedback do professor)
+**/target/
+*.jar
+*.war
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Logs e arquivos temporários
+*.log
