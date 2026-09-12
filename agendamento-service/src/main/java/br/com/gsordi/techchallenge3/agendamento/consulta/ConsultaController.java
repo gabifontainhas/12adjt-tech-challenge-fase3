@@ -34,7 +34,7 @@ public class ConsultaController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('MEDICO')")
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     public ResponseEntity<ConsultaDTO.Response> editar(
             @PathVariable UUID id,
             @RequestBody @Valid ConsultaDTO.PutRequest request) {
