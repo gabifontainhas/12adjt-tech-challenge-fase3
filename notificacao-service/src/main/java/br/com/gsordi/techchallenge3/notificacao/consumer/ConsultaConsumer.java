@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConsultaConsumer {
 
-    @RabbitListener(queues = "consultas.notificacoes.queue")
+    @RabbitListener(queues = "consultas.agendadas.queue")
     public void consumirConsultaAgendada(ConsultaAgendadaEvent evento) {
         System.out.println("==================================================");
         System.out.println(" [EVENTO RECEBIDO] Nova Consulta Agendada!");
@@ -20,7 +20,7 @@ public class ConsultaConsumer {
         System.out.println("==================================================");
     }
 
-    @RabbitListener(queues = "consultas.notificacoes.queue")
+    @RabbitListener(queues = "consultas.alteradas.queue")
     public void consumirConsultaAlterada(ConsultaAlteradaEvent evento) {
         System.out.println("==================================================");
         System.out.println(" [EVENTO RECEBIDO] Consulta Alterada/Remarcada!");

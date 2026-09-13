@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String EXCHANGE_NAME = "consultas.exchange";
-    public static final String QUEUE_NAME = "consultas.notificacoes.queue";
+     public static final String QUEUE_AGENDADA = "consultas.agendadas.queue";
+    public static final String QUEUE_ALTERADA = "consultas.alteradas.queue";
     public static final String ROUTING_KEY_AGENDADA = "consulta.agendada";
     public static final String ROUTING_KEY_ALTERADA = "consulta.alterada";
 
@@ -27,20 +28,27 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue queue() {
-        return QueueBuilder.durable(QUEUE_NAME)
+    public Queue queueAgendada() {
+        return QueueBuilder.durable(QUEUE_AGENDADA)
                 .deadLetterExchange(DLX_NAME)
                 .build();
     }
 
     @Bean
-    public Binding bindingAgendada(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY_AGENDADA);
+    public Queue queueAlterada() {
+        return QueueBuilder.durable(QUEUE_ALTERADA)
+                .deadLetterExchange(DLX_NAME)
+                .build();
     }
 
     @Bean
-    public Binding bindingAlterada(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY_ALTERADA);
+    public Binding bindingAgendada(Queue queueAgendada, TopicExchange exchange) {
+        return BindingBuilder.bind(queueAgendada).to(exchange).with(ROUTING_KEY_AGENDADA);
+    }
+
+    @Bean
+    public Binding bindingAlterada(Queue queueAlterada, TopicExchange exchange) {
+        return BindingBuilder.bind(queueAlterada).to(exchange).with(ROUTING_KEY_ALTERADA);
     }
 
     @Bean
