@@ -10,34 +10,26 @@ Projeto prático desenvolvido para a **Fase 3 da Pós-Graduação (12ADJT)**. A 
 
 A solução é composta por dois microsserviços autônomos, um banco de dados relacional e um broker de mensageria:
 
-```text
-                  +--------------------------------------------------+
-                  |                 DOCKER NETWORK                   |
-                  |                                                  |
-                  |  +--------------------+                          |
-[ Cliente /       |  |  PostgreSQL 15     |                          |
-  Postman ] -------->|  (clinica-db:5432) |                          |
-     |            |  +---------^----------+                          |
-     |            |            |                                     |
-     | (HTTP 8081)|  +---------+----------+                          |
-     +-------------->| agendamento-service|                          |
-                  |  +---------+----------+                          |
-                  |            |                                     |
-                  |       (AMQP Pub)                                 |
-                  |            v                                     |
-                  |  +--------------------+                          |
-                  |  |  RabbitMQ 3        |                          |
-                  |  |  (meu-rabbitmq)    |                          |
-                  |  +---------+----------+                          |
-                  |            |                                     |
-                  |       (AMQP Sub)                                 |
-                  |            v                                     |
-                  |  +--------------------+                          |
-     +-------------->| notificacao-service|                          |
-     | (HTTP 8082)|  +--------------------+                          |
-     |            +--------------------------------------------------+
-[ Logs /          
-  Monitoramento ]
+```mermaid
+flowchart TD
+    subgraph DockerNetwork["DOCKER NETWORK"]
+        direction TB
+        Postgres[("PostgreSQL 15<br/>(clinica-db:5432)")]
+        Agendamento["agendamento-service"]
+        RabbitMQ["RabbitMQ 3<br/>(meu-rabbitmq)"]
+        Notificacao["notificacao-service"]
+
+        Agendamento -->|JDBC / JPA| Postgres
+        Agendamento -->|AMQP Pub| RabbitMQ
+        RabbitMQ -->|AMQP Sub| Notificacao
+    end
+
+    Client["Cliente / Postman"]
+    Logs["Logs / Monitoramento"]
+
+    Client -->|HTTP 8081| Agendamento
+    Client -->|HTTP 8082| Notificacao
+    Notificacao -.->|Stdout / Logs| Logs
 ```
 
 ### 1. `agendamento-service` (Porta 8081)
