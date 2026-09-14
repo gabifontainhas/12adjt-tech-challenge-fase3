@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "7a202169-7674-4f22-8d5e-b2527689bca9",
+    "_postman_id": "4799f63f-afad-469e-ae23-b2dcc3e9cec6",
     "name": "TechChallenge_Fase3",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "1964827"
@@ -560,7 +560,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"idMedico\": \"{{id_medico}}\",\r\n  \"idPaciente\": \"{{id_paciente}}\",\r\n  \"data\": \"2026-09-30T12:31:00\"\r\n}",
+              "raw": "{\r\n  \"idMedico\": \"{{id_medico}}\",\r\n  \"idPaciente\": \"{{id_paciente}}\",\r\n  \"data\": \"2026-10-30T12:31:00\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -690,7 +690,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"novaData\": \"2026-09-14T14:00:00\"\r\n}",
+              "raw": "{\r\n    \"novaData\": \"2026-10-14T14:00:00\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
