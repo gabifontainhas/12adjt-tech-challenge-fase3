@@ -2,23 +2,22 @@ package br.com.gsordi.techchallenge3.agendamento.enfermeiro.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.UUID;
 
 public class EnfermeiroDTO {
     public record PostRequest(
-            @NotBlank
+            @NotBlank(message = "O nome é obrigatório")
             String nome,
 
-            @NotBlank
+            @NotBlank(message = "O coren é obrigatório")
             String coren,
 
-            @NotBlank
-            @Email
+            @NotBlank(message = "O email é obrigatório")
+            @Email(message = "Formato de e-mail inválido")
             String email,
 
-            @NotBlank
+            @NotBlank(message = "A senha é obrigatória")
             String senha
     ) {
     }

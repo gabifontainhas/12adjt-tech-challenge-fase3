@@ -12,26 +12,29 @@ A solução é composta por dois microsserviços autônomos, um banco de dados r
 
 ```mermaid
 flowchart TD
-    subgraph DockerNetwork["DOCKER NETWORK"]
-        direction TB
-        Postgres[("PostgreSQL 15<br/>(clinica-db:5432)")]
-        Agendamento["agendamento-service"]
-        RabbitMQ["RabbitMQ 3<br/>(meu-rabbitmq)"]
-        Notificacao["notificacao-service"]
+   subgraph DockerNetwork["DOCKER NETWORK"]
+      direction TB
+      Postgres[("PostgreSQL 15<br/>clinica-db:5432")]
+      Agendamento["agendamento-service"]
+      RabbitMQ["RabbitMQ 3<br/>meu-rabbitmq"]
+      Notificacao["notificacao-service"]
 
-        Agendamento -->|JDBC / JPA| Postgres
-        Agendamento -->|AMQP Pub| RabbitMQ
-        RabbitMQ -->|AMQP Sub| Notificacao
-    end
+      Agendamento -->|JDBC / JPA| Postgres
+      Agendamento -->|AMQP Pub| RabbitMQ
+      RabbitMQ -->|AMQP Sub| Notificacao
+   end
 
-    Client["Cliente / Postman"]
-    Logs["Logs / Monitoramento"]
+   Client["Cliente / Postman"]
+   Logs["Logs / Monitoramento"]
 
-    Client -->|HTTP 8081| Agendamento
-    Client -->|HTTP 8082| Notificacao
-    Notificacao -.->|Stdout / Logs| Logs
+   Client -->|HTTP 8081 - API de Negocio| Agendamento
+   Client -.->|HTTP 8082 - Admin Reprocessar DLQ| Notificacao
+   Notificacao -.->|Stdout / Logs| Logs
 ```
-
+> **Observação Arquitetural sobre o `notificacao-service`:**  
+> O notificacao-service não recebe requisições de negócio via HTTP, isso ocorre via filas do RabbitMQ.
+> A porta 8082 é usada exclusivamente para a rota administrativa de reprocessar mensagens da DLQ (POST /admin/dlq/reprocessar)
+ 
 ### 1. `agendamento-service` (Porta 8081)
 * **Responsabilidade:** Autenticação (JWT), controle de acesso baseado em papéis (RBAC), gestão cadastral (Médicos, Pacientes, Enfermeiros) e agendamento/remarcação de consultas.
 * **Persistência:** Conecta-se ao banco de dados relacional PostgreSQL.
@@ -40,6 +43,7 @@ flowchart TD
 ### 2. `notificacao-service` (Porta 8082)
 * **Responsabilidade:** Processamento em segundo plano de comunicações e alertas para pacientes e profissionais de saúde.
 * **Mensageria (Consumidor):** Escuta as filas do RabbitMQ e simula o disparo de confirmações/lembretes de consulta em tempo real via logs estruturados.
+* **Resiliência (DLQ):** A porta 8082 é exposta apenas para a rota administrativa que permite reprocessar manualmente as mensagens da Dead Letter Queue (`POST /admin/dlq/reprocessar`).
 
 ### 3. `postgres` (Porta 5432)
 * Banco de dados relacional PostgreSQL 15, provisionado com persistência e inicialização automática de schema.

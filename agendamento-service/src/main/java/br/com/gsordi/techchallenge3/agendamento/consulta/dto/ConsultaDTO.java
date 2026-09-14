@@ -11,14 +11,14 @@ import java.util.UUID;
 public class ConsultaDTO {
 
     public record PostRequest(
-            @NotNull
+            @NotNull(message = "O ID do médico é obrigatório")
             UUID idMedico,
 
-            @NotNull
+            @NotNull(message = "O ID do paciente é obrigatório")
             UUID idPaciente,
 
-            @NotNull
-            @Future
+            @NotNull(message = "A data da consulta é obrigatória")
+            @Future(message = "A data da consulta deve ser uma data futura")
             LocalDateTime data
     ) {
     }
@@ -41,8 +41,8 @@ public class ConsultaDTO {
         }
     }
     public record PutRequest(
-            @NotNull
-            @Future
+            @NotNull(message = "A data da consulta é obrigatória")
+            @Future(message = "A data da consulta deve ser uma data futura")
             LocalDateTime novaData
     ) {}
 }

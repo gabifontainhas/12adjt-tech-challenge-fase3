@@ -9,18 +9,18 @@ import java.util.UUID;
 public final class PacienteDTO {
     public record PostRequest(
 
-            @NotBlank
+            @NotBlank(message = "O nome é obrigatório")
             String nome,
 
-            @NotBlank
-            @CPF
+            @NotBlank(message = "O cpf é obrigatório")
+            @CPF(message = "CPF inválido")
             String cpf,
 
-            @NotBlank
-            @Email
+            @NotBlank(message = "O email é obrigatório")
+            @Email(message = "Formato de e-mail inválido")
             String email,
 
-            @NotBlank
+            @NotBlank(message = "A senha é obrigatória")
             String senha
     ) {
     }

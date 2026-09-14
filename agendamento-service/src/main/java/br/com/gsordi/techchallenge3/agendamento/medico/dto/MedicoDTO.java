@@ -7,18 +7,17 @@ import java.util.UUID;
 
 public class MedicoDTO {
     public record PostRequest(
-
-            @NotBlank
+            @NotBlank(message = "O nome é obrigatório")
             String nome,
 
-            @NotBlank
+            @NotBlank(message = "O crm é obrigatório")
             String crm,
 
-            @NotBlank
-            @Email
+            @NotBlank(message = "O email é obrigatório")
+            @Email(message = "Formato de e-mail inválido")
             String email,
 
-            @NotBlank
+            @NotBlank(message = "A senha é obrigatória")
             String senha
     ) {
     }

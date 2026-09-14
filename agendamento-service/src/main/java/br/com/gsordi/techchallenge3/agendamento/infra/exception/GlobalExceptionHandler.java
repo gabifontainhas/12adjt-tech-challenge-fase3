@@ -2,7 +2,6 @@ package br.com.gsordi.techchallenge3.agendamento.infra.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,12 +12,20 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<DadosErroValidacao>> handleTratarErrosDeValidacao(MethodArgumentNotValidException ex) {
+    public ProblemDetail handleTratarErrosDeValidacao(MethodArgumentNotValidException ex) {
+        var problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                "Um ou mais campos contêm valores inválidos"
+        );
+        problemDetail.setTitle("Erro de validação");
+
         List<DadosErroValidacao> erros = ex.getFieldErrors().stream()
                 .map(erro -> new DadosErroValidacao(erro.getField(), erro.getDefaultMessage()))
                 .toList();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros);
+        problemDetail.setProperty("erros", erros);
+
+        return problemDetail;
     }
 
     @ExceptionHandler(RegistroJaExisteException.class)

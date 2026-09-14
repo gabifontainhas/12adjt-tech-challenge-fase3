@@ -7,7 +7,7 @@
   },
   "item": [
     {
-      "name": "medico",
+      "name": "criar usuários",
       "item": [
         {
           "name": "POST Medico",
@@ -51,6 +51,294 @@
           },
           "response": []
         },
+        {
+          "name": "POST Medico 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {\r\n    var resposta = pm.response.json();\r\n    pm.collectionVariables.set(\"id_medico2\", resposta.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Derek Shepherd\",\r\n    \"crm\": \"98765\",\r\n    \"email\": \"derek.shepherd@hospital.com\",\r\n    \"senha\": \"98765\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/medicos",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "medicos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Enfermeiro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {\r",
+                  "    var resposta = pm.response.json();\r",
+                  "    pm.collectionVariables.set(\"id_enfermeiro\", resposta.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Izzie Stevens\",\r\n    \"coren\": \"88888\",\r\n    \"email\": \"izzie.stevens@hospital.com\",\r\n    \"senha\": \"Teste123\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/enfermeiros",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "enfermeiros"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Paciente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {\r",
+                  "    var resposta = pm.response.json();\r",
+                  "    pm.collectionVariables.set(\"id_paciente\", resposta.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Jose Da Silva\",\r\n    \"cpf\": \"81804828041\",\r\n    \"email\": \"jose.silva@pacientes.com\",\r\n    \"senha\": \"98765\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/pacientes",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Paciente 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {\r\n    var resposta = pm.response.json();\r\n    pm.collectionVariables.set(\"id_paciente2\", resposta.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Maria Souza\",\r\n    \"cpf\": \"01234567890\",\r\n    \"email\": \"maria.souza@pacientes.com\",\r\n    \"senha\": \"Teste@987\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/pacientes",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "item": [
+        {
+          "name": "POST login Medico",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var resposta = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"token_medico\", resposta.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"meredith.grey@hospital.com\",\r\n  \"senha\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/login",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST login Enfermeiro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var resposta = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"token_enfermeiro\", resposta.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"izzie.stevens@hospital.com\",\r\n  \"senha\": \"Teste123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/login",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST login Paciente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var resposta = pm.response.json();\r\npm.collectionVariables.set(\"token_paciente\", resposta.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"jose.silva@pacientes.com\",\r\n    \"senha\": \"98765\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/login",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "listar usuários",
+      "item": [
         {
           "name": "GET Medicos",
           "protocolProfileBehavior": {
@@ -123,56 +411,6 @@
             }
           },
           "response": []
-        }
-      ]
-    },
-    {
-      "name": "enfermeiro",
-      "item": [
-        {
-          "name": "POST Enfermeiro",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {\r",
-                  "    var resposta = pm.response.json();\r",
-                  "    pm.collectionVariables.set(\"id_enfermeiro\", resposta.id);\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Izzie Stevens\",\r\n    \"coren\": \"88888\",\r\n    \"email\": \"izzie.stevens@hospital.com\",\r\n    \"senha\": \"Teste123\" \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{agendamento_url}}/enfermeiros",
-              "host": [
-                "{{agendamento_url}}"
-              ],
-              "path": [
-                "enfermeiros"
-              ]
-            }
-          },
-          "response": []
         },
         {
           "name": "GET Enfermeiros",
@@ -203,53 +441,6 @@
               ],
               "path": [
                 "enfermeiros"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "paciente",
-      "item": [
-        {
-          "name": "POST Paciente",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {\r",
-                  "    var resposta = pm.response.json();\r",
-                  "    pm.collectionVariables.set(\"id_paciente\", resposta.id);\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Jose Da Silva\",\r\n    \"cpf\": \"81804828041\",\r\n    \"email\": \"jose.silva@pacientes.com\",\r\n    \"senha\": \"98765\" \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{agendamento_url}}/pacientes",
-              "host": [
-                "{{agendamento_url}}"
-              ],
-              "path": [
-                "pacientes"
               ]
             }
           },
@@ -296,6 +487,53 @@
       "item": [
         {
           "name": "POST Consulta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {\r\n    var resposta = pm.response.json();\r\n    pm.collectionVariables.set(\"id_consulta\", resposta.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_enfermeiro}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"idMedico\": \"{{id_medico}}\",\r\n  \"idPaciente\": \"{{id_paciente}}\",\r\n  \"data\": \"2026-09-30T12:31:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agendamento_url}}/consultas",
+              "host": [
+                "{{agendamento_url}}"
+              ],
+              "path": [
+                "consultas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Consulta 2",
           "event": [
             {
               "listen": "test",
@@ -467,128 +705,6 @@
               "path": [
                 "consultas",
                 "{{id_consulta}}"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "login",
-      "item": [
-        {
-          "name": "POST login Enfermeiro",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var resposta = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"token_enfermeiro\", resposta.token);"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"email\": \"izzie.stevens@hospital.com\",\r\n  \"senha\": \"Teste123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{agendamento_url}}/login",
-              "host": [
-                "{{agendamento_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "POST login Medico",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var resposta = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"token_medico\", resposta.token);"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"email\": \"meredith.grey@hospital.com\",\r\n  \"senha\": \"123456\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{agendamento_url}}/login",
-              "host": [
-                "{{agendamento_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "POST login Paciente",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "var resposta = pm.response.json();\r\npm.collectionVariables.set(\"token_paciente\", resposta.token);"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"jose.silva@pacientes.com\",\r\n    \"senha\": \"98765\" \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{agendamento_url}}/login",
-              "host": [
-                "{{agendamento_url}}"
-              ],
-              "path": [
-                "login"
               ]
             }
           },
@@ -787,6 +903,14 @@
     },
     {
       "key": "id_consulta",
+      "value": ""
+    },
+    {
+      "key": "id_medico2",
+      "value": ""
+    },
+    {
+      "key": "id_paciente2",
       "value": ""
     }
   ]

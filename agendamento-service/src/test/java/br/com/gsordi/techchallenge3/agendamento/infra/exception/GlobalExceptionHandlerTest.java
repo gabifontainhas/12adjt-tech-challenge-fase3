@@ -18,7 +18,7 @@ class GlobalExceptionHandlerTest {
     private final GlobalExceptionHandler handler = new GlobalExceptionHandler();
 
     @Test
-    @DisplayName("Deve retornar status 400 Bad Request com lista de campos mapeados ao capturar MethodArgumentNotValidException")
+    @DisplayName("Deve retornar status 400 Bad Request com ProblemDetail e lista de campos mapeados ao capturar MethodArgumentNotValidException")
     void deveTratarErroValidacao() {
         var ex = mock(MethodArgumentNotValidException.class);
         var erro = new FieldError("pacienteDTO", "cpf", "CPF inválido");
@@ -26,13 +26,18 @@ class GlobalExceptionHandlerTest {
 
         var response = handler.handleTratarErrosDeValidacao(ex);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(1, response.getBody().size());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+        assertEquals("Erro de validação", response.getTitle());
+        assertEquals("Um ou mais campos contêm valores inválidos", response.getDetail());
 
-        var erroRetornado = response.getBody().get(0);
-        assertEquals("cpf", erroRetornado.campo());
-        assertEquals("CPF inválido", erroRetornado.mensagem());
+        assertNotNull(response.getProperties());
+        assertTrue(response.getProperties().containsKey("erros"));
+
+        var erros = (List<GlobalExceptionHandler.DadosErroValidacao>) response.getProperties().get("erros");
+
+        assertEquals(1, erros.size());
+        assertEquals("cpf", erros.getFirst().campo());
+        assertEquals("CPF inválido", erros.getFirst().mensagem());
     }
 
     @Test
