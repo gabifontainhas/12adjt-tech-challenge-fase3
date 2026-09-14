@@ -66,7 +66,7 @@ flowchart TD
 Para clonar e executar o ecossistema completo, você precisará de:
 
 * [Git](https://git-scm.com/)
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/) (com suporte a Docker Compose v2)
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) (com suporte a Docker Compose v2) instalado e em execução 
 * [Postman](https://www.postman.com/) (para executar os testes automatizados da collection)
 
 ---
